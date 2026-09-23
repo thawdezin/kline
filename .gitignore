@@ -18,3 +18,7 @@ logs/
 .idea/
 .vscode/
 *.swp
+
+# Local secrets — never commit
+SERVER_CREDENTIALS.local.md
+*.local.md
