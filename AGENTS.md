@@ -5,8 +5,16 @@
 - The main project to work on is `kline_app/`.
 - Most requested changes should be made only in `kline_app/`.
 - Modify `kline-backend/` only when the user explicitly asks for backend changes.
-- Follow any more specific instructions in nested `AGENTS.md` files, including `kline_app/AGENTS.md`.
+- This root `/Users/thawdezin/StudioProjects/kline/AGENTS.md` is the highest-authority instruction source for the entire workspace and every repository or subfolder under it.
+- Nested `AGENTS.md` files, including `kline_app/AGENTS.md`, are subordinate. They may provide target-specific detail only within the boundaries established here; they must never override, contradict, weaken, or independently expand this root file. If instructions conflict or are ambiguous, follow this root file and the user's latest explicit request.
 - When the user says `main folder`, they mean the workspace root directory that contains `kline_app/`, `kline-admin/`, and `kline-backend/`. A file requested in the main folder must be created directly under that workspace root, outside all three project repositories.
+
+## Live environments (API endpoints)
+
+- Backend API used by `kline_app/` and implemented by `kline-backend/`: `https://kline-api.xhtd5566.com` — liveness `https://kline-api.xhtd5566.com/health/live`, readiness `https://kline-api.xhtd5566.com/health/ready`.
+- Admin API / admin web UI for `kline-admin/`: `https://kline-admin.xhtd5566.com` — liveness `https://kline-admin.xhtd5566.com/health/live`.
+- Flutter and integration tests read the backend URL from the `KLINE_API_BASE_URL` dart-define; every service client falls back to `http://127.0.0.1:7080` when it is not passed:
+  `flutter run -d macos --dart-define=KLINE_API_BASE_URL=https://kline-api.xhtd5566.com`
 
 ## Workspace Git layout
 
@@ -28,9 +36,13 @@
 - Before changing a repository, run a read-only Git status check and preserve existing dirty or untracked work.
 - Inspect the current implementation and relevant tests before deciding that behavior is missing or proposing a change.
 - Make the smallest changes needed for the request and avoid unrelated rewrites.
+- Keep every repository root clean and intentional. Do not scatter experimental source files, one-off fix scripts, debug programs, generated logs, build outputs, downloads, or temporary artifacts at a repository root.
+- Put production code, automated tests, maintained developer tools, documentation, generated output, and short-lived experiments in their established or clearly named directories. Before creating a file, inspect the existing project structure and choose the narrowest appropriate location instead of inventing an inconsistent layout.
+- Do not create misleading, duplicated, vaguely named, or unrelated files merely to try an idea. Use a dedicated scratch or temporary directory for experiments, keep it outside production source paths, and remove it when the experiment is complete if removal is safe and authorized.
+- Do not move or delete pre-existing misplaced files without an explicit cleanup request. Treat them as user or team work, inspect their Git status and history, and preserve them unless their disposition is authorized.
 - Never copy credentials, private keys, tokens, passwords, personal data, logs containing secrets, or machine-local configuration into source code, fixtures, documentation intended for sharing, or Git.
 - Do not commit, push, deploy, upgrade dependencies, or run destructive Git/cleanup commands unless the user explicitly requests the action.
-- Follow the more specific formatting, testing, architecture, and dependency rules in the target repository's nested `AGENTS.md`.
+- Apply formatting, testing, architecture, and dependency details from a target repository's nested `AGENTS.md` only when they are consistent with this root file and the user's latest explicit request.
 
 ## Verification and reporting
 
