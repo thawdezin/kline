@@ -9,6 +9,14 @@
 - Nested `AGENTS.md` files, including `kline_app/AGENTS.md`, are subordinate. They may provide target-specific detail only within the boundaries established here; they must never override, contradict, weaken, or independently expand this root file. If instructions conflict or are ambiguous, follow this root file and the user's latest explicit request.
 - When the user says `main folder`, they mean the workspace root directory that contains `kline_app/`, `kline-admin/`, and `kline-backend/`. A file requested in the main folder must be created directly under that workspace root, outside all three project repositories.
 
+## User shorthand paths
+
+- `kline app` means `/Users/thawdezin/StudioProjects/kline/kline_app`.
+- `kline backend` means `/Users/thawdezin/StudioProjects/kline/kline-backend`.
+- `kline admin` means `/Users/thawdezin/StudioProjects/kline/kline-admin`.
+- `agent.md` means the root `/Users/thawdezin/StudioProjects/kline/AGENTS.md`.
+- `kline app agents.md` means `/Users/thawdezin/StudioProjects/kline/kline_app/AGENTS.md`.
+
 ## Live environments (API endpoints)
 
 - Backend API used by `kline_app/` and implemented by `kline-backend/`: `https://kline-api.xhtd5566.com` — liveness `https://kline-api.xhtd5566.com/health/live`, readiness `https://kline-api.xhtd5566.com/health/ready`.
@@ -50,3 +58,11 @@
 - A passing unit test is not sufficient proof of real UI or device behavior when the request concerns an end-to-end user flow.
 - Never claim a fix is complete when the requested flow could not be reproduced or verified. State the exact verification gap clearly.
 - After work, report the outcome first, list the relevant files or artifacts, provide useful checking commands, and mention any remaining warnings or blockers.
+
+## AdMob ID Safety (Mandatory)
+
+- Every project that uses AdMob must use official Google AdMob test app IDs and test ad-unit IDs in Debug/development mode only. Never request live ads with production IDs from debug, emulator, simulator, development, test, preview, or CI builds.
+- Release/production builds must use the project's real production AdMob app IDs and ad-unit IDs only. Test IDs must never be packaged, selected, injected, or reachable in Release mode.
+- Before running or handing off any release/production build command—such as `flutter build ios --release`, an obfuscated Flutter release, a Kotlin/Android or Swift/iOS release, a Python-driven build, CI/CD packaging, or equivalent tooling—the AI must audit every platform, manifest/plist, build flavor, environment variable, remote config, and runtime selection path and confirm with 100% certainty that the resulting release artifact resolves only to the real production AdMob IDs.
+- An unverified, missing, placeholder, sample, or ambiguous AdMob ID is a release blocker. Do not build, sign, archive, upload, submit, or report a release as ready until the production IDs are verified. Never guess production IDs; obtain them from the project's authorized configuration or ask the user.
+- Keep Debug and Release selection explicit and fail closed: Debug resolves only to test IDs, while Release resolves only to verified production IDs. Add or preserve automated checks where practical so a test ID in Release or a production ID in Debug fails the build.
